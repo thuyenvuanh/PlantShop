@@ -10,15 +10,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import daos.AccountDAO;
-import dtos.Account;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author anhthuyn
+ * @author anhthuyn2412@gmail.com - Vu Anh Thuyen
  */
-public class LoginServlet extends HttpServlet {
+public class LogoutServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,25 +29,9 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String email = request.getParameter("txtemail");
-        String password = request.getParameter("txtpassword");
-        Account account = AccountDAO.getAccount(email, password);
-        if (account != null) {
-            if (account.getRole() == 1) {
-                //admin
-                
-            } else {
-                //user/customer
-                HttpSession session = request.getSession();
-                if (session != null) {
-                    session.setAttribute("name", account.getFullname());
-                    session.setAttribute("email", account.getEmail());
-                    session.setAttribute("account", account);
-                    response.sendRedirect("personalPage.jsp");
-                }
-            }
-        } else {
-            response.sendRedirect("invalid.html");
+        try ( PrintWriter out = response.getWriter()) {
+            request.getSession().invalidate();
+            response.sendRedirect("index.jsp");
         }
     }
 

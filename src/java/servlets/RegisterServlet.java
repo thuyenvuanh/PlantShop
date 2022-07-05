@@ -7,6 +7,7 @@ package servlets;
 import daos.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +40,9 @@ public class RegisterServlet extends HttpServlet {
         int status = 1;
         int role = 0;
         if (AccountDAO.insertAccount(email, password, fullName, phone, status, role)) {
-            response.sendRedirect("index.html");
+            request.setAttribute("new_email", email);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("SendOTP");
+            dispatcher.forward(request, response);
         } else {
             response.sendRedirect("errorpage.html");
         }

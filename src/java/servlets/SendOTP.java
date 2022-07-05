@@ -6,19 +6,17 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import daos.AccountDAO;
-import dtos.Account;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author anhthuyn
+ * @author anhthuyn2412@gmail.com - Vu Anh Thuyen
  */
-public class LoginServlet extends HttpServlet {
+public class SendOTP extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,25 +30,21 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String email = request.getParameter("txtemail");
-        String password = request.getParameter("txtpassword");
-        Account account = AccountDAO.getAccount(email, password);
-        if (account != null) {
-            if (account.getRole() == 1) {
-                //admin
-                
-            } else {
-                //user/customer
-                HttpSession session = request.getSession();
-                if (session != null) {
-                    session.setAttribute("name", account.getFullname());
-                    session.setAttribute("email", account.getEmail());
-                    session.setAttribute("account", account);
-                    response.sendRedirect("personalPage.jsp");
-                }
-            }
-        } else {
-            response.sendRedirect("invalid.html");
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet sendOTP</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet sendOTP at " + request.getContextPath() + "</h1>");
+            String email = (String) request.getAttribute("new_email");
+            out.print("<p>A confirmation email has been sent to " + email + ". Please check you inbox or spam folder</p>");
+            RequestDispatcher rd = request.getRequestDispatcher("ContactServlet");
+            rd.include(request, response);
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

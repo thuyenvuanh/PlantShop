@@ -9,6 +9,8 @@ import dtos.Plant;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -69,6 +71,14 @@ public class SearchServlet extends HttpServlet {
             out.print("</header>");
             out.print("<section>");
 
+            ServletContext context = getServletContext();
+            String tmp = context.getInitParameter("countryName");
+            out.print("<p>The web is deploying in " + tmp + "</p>");
+            ServletConfig config = getServletConfig();
+            String tmp2 = config.getInitParameter("language");
+            out.print("<p>Language use in the website is " + tmp2 + "</p>");
+            
+            
             out.print("<table class='product table'>");
             out.print("<tr>");
             out.print("<td>PID</td>");

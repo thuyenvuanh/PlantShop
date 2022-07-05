@@ -4,21 +4,20 @@
  */
 package servlets;
 
+import daos.AccountDAO;
+import dtos.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import daos.AccountDAO;
-import dtos.Account;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author anhthuyn
+ * @author anhthuyn2412@gmail.com - Vu Anh Thuyen
  */
-public class LoginServlet extends HttpServlet {
+public class UpdateServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,25 +31,15 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String email = request.getParameter("txtemail");
-        String password = request.getParameter("txtpassword");
-        Account account = AccountDAO.getAccount(email, password);
-        if (account != null) {
-            if (account.getRole() == 1) {
-                //admin
-                
-            } else {
-                //user/customer
-                HttpSession session = request.getSession();
-                if (session != null) {
-                    session.setAttribute("name", account.getFullname());
-                    session.setAttribute("email", account.getEmail());
-                    session.setAttribute("account", account);
-                    response.sendRedirect("personalPage.jsp");
-                }
-            }
-        } else {
-            response.sendRedirect("invalid.html");
+        try ( PrintWriter out = response.getWriter()) {
+            Account account = (Account) request.getSession().getAttribute("account");
+            String fullName = request.getParameter("name");
+            String phone = request.getParameter("phone");
+            account.setFullname(fullName);
+            account.setPhone(phone);
+            AccountDAO.updateAccount(account.getEmail(), account.getPassword(), fullName, phone);
+            request.getSession().setAttribute("account", AccountDAO.getAccount(account.getEmail(), account.getPassword()));
+            response.sendRedirect("personalPage.jsp");
         }
     }
 

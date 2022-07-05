@@ -17,7 +17,7 @@ import utils.DBUtils;
  */
 public class PlantDAO {
 
-    public ArrayList<Plant> searchPlant(String keyword, String searchBy) throws Exception {
+    public static ArrayList<Plant> searchPlant(String keyword, String searchBy) throws Exception {
         ArrayList<Plant> list = new ArrayList<>();
 
         Connection connection = DBUtils.getConnection();
