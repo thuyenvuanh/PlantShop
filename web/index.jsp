@@ -38,7 +38,7 @@
                     Price: <%= plant.getPrice()%> <br>
                     Status: <%= tmp[plant.getStatus()]%> <br>
                     Category: <%= plant.getCateName()%> <br>
-                    <a href="">Add to cart</a></td>
+                    <a href="MainController?action=addtocart&pid=<%= plant.getId() %>">Add to cart</a></td>
             </table>    
             <%                    }
                 }

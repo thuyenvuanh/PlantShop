@@ -28,6 +28,10 @@
                         <td><input type="password" name="txtpassword"/></td>
                     </tr>
                     <tr>
+                        <td><input type="checkbox" name="saveLogin" value="saveLogin"/></td>
+                        <td>Stay signed in</td>
+                    </tr>
+                    <tr>
                         <td colspan="2">
                             <input type="submit" value="login" name="action"/>
                         </td>

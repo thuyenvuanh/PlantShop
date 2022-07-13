@@ -15,10 +15,11 @@
 <body>
     <nav>
         <ul>
-            <li><a href=""><img id="logo" src="images/logo.jpg"></a> </li>
-            <li><a href="">Home</a></li>
+            <li><a href="MainController"><img id="logo" src="images/logo.jpg"></a> </li>
+            <li><a href="MainController">Home</a></li>
             <li><a href="registration.jsp">Register</a></li>
             <li><a href="login.jsp" >Login</a></li>
+            <li><a href="MainController?action=viewcart" >View Cart</a></li>
             <li>
                 <form action="MainController" method="post" class="formsearch">
                     <input type="text" name="txtsearch" value="<%= (request.getParameter("txtsearch") == null ? "" : request.getParameter("txtsearch")) %>">

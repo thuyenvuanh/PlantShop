@@ -3,13 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/thuyn/OneDrive/Desktop/Workshop1/src/java/servlets/LoginServlet.java</file>
-            <file>file:/C:/Users/thuyn/OneDrive/Desktop/Workshop1/src/java/servlets/OrderServlet.java</file>
-            <file>file:/C:/Users/thuyn/OneDrive/Desktop/Workshop1/web/header_loginedUser.jsp</file>
-            <file>file:/C:/Users/thuyn/OneDrive/Desktop/Workshop1/web/profile.jsp</file>
-            <file>file:/C:/Users/thuyn/OneDrive/Desktop/Workshop1/src/java/servlets/MainController.java</file>
-            <file>file:/C:/Users/thuyn/OneDrive/Desktop/Workshop1/src/java/dtos/Account.java</file>
-            <file>file:/C:/Users/thuyn/OneDrive/Desktop/Workshop1/src/java/servlets/UpdateServlet.java</file>
+            <file>file:/C:/Users/anhth/OneDrive/Documents/NetBeansProjects/PlantShop/src/java/servlets/MainController.java</file>
+            <file>file:/C:/Users/anhth/OneDrive/Documents/NetBeansProjects/PlantShop/web/viewCart.jsp</file>
+            <file>file:/C:/Users/anhth/OneDrive/Documents/NetBeansProjects/PlantShop/src/java/servlets/AddToCartServlet.java</file>
+            <file>file:/C:/Users/anhth/OneDrive/Documents/NetBeansProjects/PlantShop/web/header.jsp</file>
         </group>
     </open-files>
 </project-private>

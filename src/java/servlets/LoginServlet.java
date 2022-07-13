@@ -5,13 +5,13 @@
 package servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import daos.AccountDAO;
 import dtos.Account;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -34,23 +34,52 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String email = request.getParameter("txtemail");
         String password = request.getParameter("txtpassword");
-        Account account = AccountDAO.getAccount(email, password);
-        if (account != null) {
-            if (account.getRole() == 1) {
-                //admin
-                
-            } else {
-                //user/customer
-                HttpSession session = request.getSession();
-                if (session != null) {
-                    session.setAttribute("name", account.getFullname());
-                    session.setAttribute("email", account.getEmail());
-                    session.setAttribute("account", account);
+        String save = request.getParameter("saveLogin");
+        Account account = null;
+        try {
+            if (email == null || email.equals("") || password == null || password.equals("")) {
+                Cookie[] c = request.getCookies();
+                String token = "";
+                if (c != null) {
+                    for (Cookie cookie : c) {
+                        if (cookie.getName().equals("selector")) {
+                            token = cookie.getValue();
+                        }
+                    }
+                }
+                if (!token.equals("")) {
                     response.sendRedirect("personalPage.jsp");
+                } else {
+                    response.sendRedirect("errorpage.html");
+                }
+            } else {
+                account = AccountDAO.getAccount(email, password);
+                if (account != null) {
+                    if (account.getRole() == 1) {
+                        //admin
+
+                    } else {
+                        //user/customer
+                        HttpSession session = request.getSession(true);
+                        if (session != null) {
+                            session.setAttribute("name", account.getFullname());
+                            session.setAttribute("email", account.getEmail());
+                            session.setAttribute("account", account);
+                            if (save != null) {
+                                String token  = "ABC123";
+                                AccountDAO.updateToken(account.getEmail(), token);
+                                Cookie cookie = new Cookie("selector", token);
+                                cookie.setMaxAge(60*2);
+                                response.addCookie(cookie);
+                            }
+                            response.sendRedirect("personalPage.jsp");
+                        }
+                    }
+                } else {
+                    response.sendRedirect("invalid.html");
                 }
             }
-        } else {
-            response.sendRedirect("invalid.html");
+        } catch (Exception e) {
         }
     }
 

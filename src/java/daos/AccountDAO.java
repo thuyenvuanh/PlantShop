@@ -69,6 +69,33 @@ public class AccountDAO {
         }
         return account;
     }
+    
+    public static Account getAccount(String token) {
+
+        Account account = null;
+        try {
+            Connection connection = DBUtils.getConnection();
+            String sql = "select accID,email,password,fullname,phone,status,role\n"
+                    + "from Accounts\n"
+                    + "where status = 1 and token = ? COLLATE Latin1_General_CS_AS";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, token);
+            ResultSet rs = st.executeQuery();
+            if (rs != null && rs.next()) {
+                account = new Account(
+                        rs.getInt("accID"),
+                        rs.getInt("status"),
+                        rs.getInt("role"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("fullname"),
+                        rs.getString("Phone"));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return account;
+    }
 
     public static boolean updateAccountStatus(String email, int status) {
         boolean result = false;
@@ -123,6 +150,24 @@ public class AccountDAO {
             statement.setString(4, phone);
             statement.setInt(5, status);
             statement.setInt(6, role);
+            int row = statement.executeUpdate();
+            result = row > 0;
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return result;
+    }
+    
+    public static boolean updateToken(String email, String token){
+        boolean result = false;
+        try {
+            Connection connection = DBUtils.getConnection();
+            String sql = "update accounts\n"
+                    + "set Token=?\n"
+                    + "where email = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, token);
+            statement.setString(2, email);
             int row = statement.executeUpdate();
             result = row > 0;
         } catch (Exception e) {

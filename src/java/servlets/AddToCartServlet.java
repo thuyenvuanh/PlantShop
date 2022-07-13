@@ -5,19 +5,18 @@
 package servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author anhthuyn2412@gmail.com - Vu Anh Thuyen
+ * @author anhthuyn
  */
-public class MainController extends HttpServlet {
-
-    private String url = "errorpage.html";
+public class AddToCartServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,30 +30,25 @@ public class MainController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            String action = request.getParameter("action");
-            if (action == null || action.equals("") || action.equals("search")) {
-                url = "index.jsp";
-            } else if (action.equals("login")) {
-                url = "LoginServlet";
-            } else if (action.equals("register")) {
-                url = "RegisterServlet";
-            } else if (action.equals("logout")){
-                url = "LogoutServlet";
-            } else if (action.equals("reorder")){
-                url = "OrderServlet";
-            } else if (action.equals("update")){
-                url = "UpdateServlet";
-            } else if (action.equals("addtocart")){
-                url = "AddToCartServlet";
-            } else if (action.equals("viewcart")){
-                url = "viewCart.jsp";
-            } else if (action.equals("updatecart")) {
-                url = "UpdateCartServlet";
-            } else if (action.equals("deletecart")){
-                url = "DeleteCartServlet";
+        String pid = request.getParameter("pid");
+        HttpSession session = request.getSession(true);
+        if (session != null) {
+            HashMap<String, Integer> cart = (HashMap<String, Integer>)session.getAttribute("cart");
+            if (cart == null) {
+                cart = new HashMap<>();
+                cart.put(pid, 1);
             }
-            request.getRequestDispatcher(url).forward(request, response);
+            else {
+                Integer tmp = cart.get(pid);
+                if (tmp == null) {
+                    cart.put(pid, 1);
+                } else {
+                    tmp++;
+                    cart.put(pid, tmp);
+                }
+            }
+            session.setAttribute("cart", cart);
+            response.sendRedirect("index.jsp");
         }
     }
 

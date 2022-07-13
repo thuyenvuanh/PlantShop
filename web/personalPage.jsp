@@ -4,6 +4,8 @@
     Author     : anhthuyn2412@gmail.com - Vu Anh Thuyen
 --%>
 
+<%@page import="daos.AccountDAO"%>
+<%@page import="dtos.Account"%>
 <%@page import="daos.OrderDAO"%>
 <%@page import="dtos.Order"%>
 <%@page import="java.util.ArrayList"%>
@@ -18,7 +20,26 @@
         <%
             String name = (String) session.getAttribute("name");
             String email = (String) session.getAttribute("email");
+            Cookie[] c = request.getCookies();
+            boolean login = false;
             if (name == null) {
+                String token = "";
+                for (Cookie cookie : c) {
+                        if (cookie.getName().equals("selector")) {
+                                token = cookie.getValue();
+                                Account account = AccountDAO.getAccount(token);
+                                if (account != null) {
+                                        name = account.getFullname();
+                                        email = account.getEmail();
+                                        login = true;
+                                    }
+                            }
+                    }
+            }
+            else {
+                login = true;
+            }
+            if (!login) {
         %>
         <p><font color = "red">You must login to view personal page</font</p>
         <p></p>
