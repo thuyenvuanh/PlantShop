@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
                 if (!token.equals("")) {
                     response.sendRedirect("personalPage.jsp");
                 } else {
-                    response.sendRedirect("errorpage.html");
+                    response.sendRedirect("errorpage.jsp");
                 }
             } else {
                 account = AccountDAO.getAccount(email, password);

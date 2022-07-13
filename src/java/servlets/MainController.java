@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class MainController extends HttpServlet {
 
-    private String url = "errorpage.html";
+    private String url = "errorpage.jsp";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,16 +43,22 @@ public class MainController extends HttpServlet {
                 url = "LogoutServlet";
             } else if (action.equals("reorder")){
                 url = "OrderServlet";
-            } else if (action.equals("update")){
+            } else if (action.equals("updateinfo")){
                 url = "UpdateServlet";
             } else if (action.equals("addtocart")){
                 url = "AddToCartServlet";
             } else if (action.equals("viewcart")){
                 url = "viewCart.jsp";
-            } else if (action.equals("updatecart")) {
+            } else if (action.equals("update")) {
                 url = "UpdateCartServlet";
-            } else if (action.equals("deletecart")){
+            } else if (action.equals("delete")){
                 url = "DeleteCartServlet";
+            } else if (action.equals("saveorder")){
+                url = "SaveShoppingCartServlet";
+            } else if (action.equals("viewPlant")) {
+                url = "ViewPlantDetail";
+            } else if (action.equals("filterDate")){
+                url = "FilterOrderByDate";
             }
             request.getRequestDispatcher(url).forward(request, response);
         }

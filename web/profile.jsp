@@ -62,7 +62,7 @@
                             <td><%= (account.getStatus() == 1) ? "Yes" : "No"%>
                         <tr>
                             <td></td>
-                            <td><input type="submit" value="update" name="action"/></td>
+                            <td><input type="submit" value="updateinfo" name="action"/></td>
                         </tr>
                     </tbody>
                 </table>

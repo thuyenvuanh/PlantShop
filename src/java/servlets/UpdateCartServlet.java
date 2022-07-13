@@ -4,24 +4,20 @@
  */
 package servlets;
 
-import daos.AccountDAO;
+import dtos.CartItem;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.servlet.RequestDispatcher;
+import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author anhthuyn2412@gmail.com - Vu Anh Thuyen
  */
-public class RegisterServlet extends HttpServlet {
-
-    private AccountDAO dao = new AccountDAO();
+public class UpdateCartServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,27 +31,19 @@ public class RegisterServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String fullName = request.getParameter("fullName");
-        String phone = request.getParameter("phoneNumber");
-        Pattern pattern = Pattern.compile("^\\d{10}$");
-        Matcher matcher = pattern.matcher(phone);
-        if (!matcher.matches()) {
-            request.setAttribute("txtemail", email);
-            request.setAttribute("txtfullname", fullName);
-            request.setAttribute("txtphone", phone);
-            request.setAttribute("ERROR", "The phone number is invalid");
-            request.getRequestDispatcher("registration.jsp").forward(request, response);
-        } else {
-            int status = 1;
-            int role = 0;
-            if (AccountDAO.insertAccount(email, password, fullName, phone, status, role)) {
-                request.setAttribute("new_email", email);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("SendOTP");
-                dispatcher.forward(request, response);
-            } else {
-                response.sendRedirect("errorpage.jsp");
+        String pid = request.getParameter("pid");
+        String newQuantity = request.getParameter("quantity");
+        HttpSession session = request.getSession();
+        if (session != null) {
+            HashMap<String, CartItem> cart = (HashMap) session.getAttribute("cart");
+            if (cart != null) {
+                CartItem item = cart.get(pid);
+                if (item != null) {
+                    item.setQuantity(Integer.parseInt(newQuantity));
+                    cart.put(pid, item);
+                    session.setAttribute("cart", cart);
+                    response.sendRedirect("viewCart.jsp");
+                }
             }
         }
     }

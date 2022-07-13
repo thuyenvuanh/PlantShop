@@ -20,12 +20,15 @@
                 <li><a href="canceledOrders.jsp"/>Canceled Orders</li>
                 <li><a href="processingOrders.jsp"/>Processing Orders</li>
                 <li>
-                    from <input type="date" name="from"/> 
-                    to <input type="date" name="to"/>
-                    <input type="submit" value="search"/>
+                    <div>
+                        <form action="MainController" method="GET">
+                            from <input type="date" name="from" value="<%= request.getAttribute("from") %>"> <br>
+                            to <input type="date" name="to" value="<%= request.getAttribute("to") %>">
+                            <input type="submit" value="filterDate" name="action">
+                        </form>
+                    </div>
                 </li>
             </ul>
-
         </nav>
     </body>
 </html>

@@ -4,6 +4,9 @@
  */
 package servlets;
 
+import daos.PlantDAO;
+import dtos.CartItem;
+import dtos.Plant;
 import java.io.IOException;
 import java.util.HashMap;
 import javax.servlet.ServletException;
@@ -33,17 +36,20 @@ public class AddToCartServlet extends HttpServlet {
         String pid = request.getParameter("pid");
         HttpSession session = request.getSession(true);
         if (session != null) {
-            HashMap<String, Integer> cart = (HashMap<String, Integer>)session.getAttribute("cart");
+            HashMap<String, CartItem> cart = (HashMap<String, CartItem>) session.getAttribute("cart");
             if (cart == null) {
                 cart = new HashMap<>();
-                cart.put(pid, 1);
-            }
-            else {
-                Integer tmp = cart.get(pid);
+                Plant plant = PlantDAO.getById(Integer.parseInt(pid));
+                CartItem item = new CartItem(plant, 1);
+                cart.put(pid, item);
+            } else {
+                CartItem tmp = cart.get(pid);
                 if (tmp == null) {
-                    cart.put(pid, 1);
+                    Plant plant = PlantDAO.getById(Integer.parseInt(pid));
+                    CartItem item = new CartItem(plant, 1);
+                    cart.put(pid, item);
                 } else {
-                    tmp++;
+                    tmp.increase();
                     cart.put(pid, tmp);
                 }
             }

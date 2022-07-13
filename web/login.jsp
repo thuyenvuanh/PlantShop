@@ -16,6 +16,7 @@
             <%@include file="header.jsp" %>
         </header>
         <section>
+            <font style="color: red;"> <%= (request.getAttribute("WARNING") == null) ? "" : request.getAttribute("WARNING") %> </font>
             <h2>Login</h2>
             <form action="MainController" method="POST">
                 <table>

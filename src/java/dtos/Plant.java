@@ -4,11 +4,13 @@
  */
 package dtos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author anhthuyn2412@gmail.com - Vu Anh Thuyen
  */
-public class Plant {
+public class Plant implements Serializable{
     private int id;
     private String name;
     private int price;

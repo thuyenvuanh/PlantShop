@@ -96,6 +96,26 @@ public class AccountDAO {
         }
         return account;
     }
+    
+    public static int getIdByEmail(String email) {
+
+        int id = -1;
+        try {
+            Connection connection = DBUtils.getConnection();
+            String sql = "select accID\n"
+                    + "from Accounts\n"
+                    + "where status = 1 and email = ? COLLATE Latin1_General_CS_AS";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            if (rs != null && rs.next()) {
+                id = rs.getInt("accID");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return id;
+    }
 
     public static boolean updateAccountStatus(String email, int status) {
         boolean result = false;

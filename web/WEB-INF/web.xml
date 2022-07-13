@@ -48,6 +48,22 @@
         <servlet-name>AddToCartServlet</servlet-name>
         <servlet-class>servlets.AddToCartServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateCartServlet</servlet-name>
+        <servlet-class>servlets.UpdateCartServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SaveShoppingCartServlet</servlet-name>
+        <servlet-class>servlets.SaveShoppingCartServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteCartServlet</servlet-name>
+        <servlet-class>servlets.DeleteCartServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FilterOrderByDate</servlet-name>
+        <servlet-class>servlets.FilterOrderByDate</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -87,6 +103,22 @@
     <servlet-mapping>
         <servlet-name>AddToCartServlet</servlet-name>
         <url-pattern>/AddToCartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateCartServlet</servlet-name>
+        <url-pattern>/UpdateCartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SaveShoppingCartServlet</servlet-name>
+        <url-pattern>/SaveShoppingCartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteCartServlet</servlet-name>
+        <url-pattern>/DeleteCartServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FilterOrderByDate</servlet-name>
+        <url-pattern>/FilterOrderByDate</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

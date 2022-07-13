@@ -111,7 +111,7 @@ public class SearchServlet extends HttpServlet {
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            response.sendRedirect("errorpage.html") ;
+            response.sendRedirect("errorpage.jsp") ;
         }
     }
 

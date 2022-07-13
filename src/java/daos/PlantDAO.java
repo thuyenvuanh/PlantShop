@@ -8,7 +8,10 @@ import dtos.Plant;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import utils.DBUtils;
 
 /**
@@ -30,13 +33,45 @@ public class PlantDAO {
         String sql = "SELECT PID, [PName], price, imgPath, [description], [status], Categories.CateID as CateID, CateName\n"
                 + "FROM dbo.Plants join dbo.Categories on Plants.CateID = Categories.CateID\n"
                 + ((searchBy.equalsIgnoreCase("byname")) ? "WHERE [PName] like ?" : "WHERE CateName like ?");
-        
+
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setString(1, "%" + keyword + "%");
         ResultSet rs = ps.executeQuery();
-        while (rs.next()) {            
+        while (rs.next()) {
             list.add(new Plant(rs.getInt("PID"), rs.getString("PName"), rs.getInt("price"), rs.getString("imgPath"), rs.getString("description"), rs.getInt("status"), rs.getInt("CateID"), rs.getString("CateName")));
         }
         return list;
+    }
+
+    public static Plant getById(int id) {
+        Plant plant = null;
+        Connection connection = null;
+        PreparedStatement ps = null;
+        try {
+            connection = DBUtils.getConnection();
+            String sql = "SELECT PID, [PName], price, imgPath, [description], [status], Categories.CateID as CateID, CateName\n"
+                    + "FROM dbo.Plants join dbo.Categories on Plants.CateID = Categories.CateID\n"
+                    + "WHERE PID = ?";
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                plant = new Plant(rs.getInt("PID"), rs.getString("PName"), rs.getInt("price"), rs.getString("imgPath"), rs.getString("description"), rs.getInt("status"), rs.getInt("CateID"), rs.getString("CateName"));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PlantDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PlantDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return plant;
     }
 }

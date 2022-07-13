@@ -22,11 +22,12 @@
                     <tbody>
                         <tr>
                             <td>Email:</td>
-                            <td><input name="email" type="text" required/></td>
+                            <td><input name="email" type="text" value="<%= (request.getAttribute("txtemail") == null) ? "" : request.getAttribute("txtemail")%>" 
+                                       required="" pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"/></td>
                         </tr>
                         <tr>
                             <td>Full Name:</td>
-                            <td><input name="fullName" type="text" required/></td>
+                            <td><input name="fullName" type="text" value="<%= (request.getAttribute("txtfullname") == null) ? "" : request.getAttribute("txtfullname") %>" required/></td>
                         </tr>
                         <tr>
                             <td>Password: </td>
@@ -34,7 +35,8 @@
                         </tr>
                         <tr>
                             <td>Phone Number:</td>
-                            <td><input name="phoneNumber" type="text"></td>
+                            <td><input type="text" name="phoneNumber" value="<%= (request.getAttribute("txtphone") == null) ? "" : request.getAttribute("txtphone")%>">
+                            <br><%= (request.getAttribute("ERROR") == null) ? "" : request.getAttribute("ERROR") %></td>
                         </tr>
                         <tr>
                             <td></td>
