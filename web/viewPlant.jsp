@@ -5,7 +5,6 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="dtos.Plant" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,18 +15,16 @@
         <header>
             <jsp:include page="header.jsp"></jsp:include>
             </header>
-        <%
-            Plant plant = (Plant) request.getAttribute("plant");
-        %>
         <section>
-            <table>
-                <tr><td rowspan="8"><img src="<%= plant.getImgPath()%>"/></td></tr>
-                <tr><td>ID:          <%= plant.getId()%></td></tr>
-                <tr><td>Name:        <%= plant.getName()%></td></tr>
-                <tr><td>Price:       <%= plant.getPrice()%></td></tr>
-                <tr><td>Category:    <%= plant.getCateName()%></td></tr>
-                <tr><td>Description: <%= plant.getDescription()%></td></tr>
-                <tr><td>Status:      <%= plant.getStatus()%></td></tr>
+            <%--<jsp:useBean id="plant" class="dtos.Plant" />--%> 
+                <table>
+                    <tr><td rowspan="8"><img src="${plant.imgPath}"/></td></tr>
+                <tr><td>ID:          ${plant.id}</td></tr>
+                <tr><td>Name:        ${plant.name}</td></tr>
+                <tr><td>Price:       ${plant.price}</td></tr>
+                <tr><td>Category:    ${plant.cateName}</td></tr>
+                <tr><td>Description: ${plant.description}</td></tr>
+                <tr><td>Status:      ${plant.status}</td></tr>
             </table>
         </section>
         <footer>

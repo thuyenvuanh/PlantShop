@@ -4,8 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/thuyn/Desktop/PlantShop/src/java/servlets/MainController.java</file>
-            <file>file:/C:/Users/thuyn/Desktop/PlantShop/src/java/servlets/RegisterServlet.java</file>
-            <file>file:/C:/Users/thuyn/Desktop/PlantShop/web/registration.jsp</file>
+            <file>file:/C:/Users/thuyn/Desktop/PlantShop/web/header_loginedUser.jsp</file>
+            <file>file:/C:/Users/thuyn/Desktop/PlantShop/src/java/servlets/SaveShoppingCartServlet.java</file>
+            <file>file:/C:/Users/thuyn/Desktop/PlantShop/src/java/servlets/FilterOrderByDate.java</file>
+            <file>file:/C:/Users/thuyn/Desktop/PlantShop/src/java/daos/OrderDAO.java</file>
         </group>
     </open-files>
 </project-private>
