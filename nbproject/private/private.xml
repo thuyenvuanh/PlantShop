@@ -3,11 +3,27 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/thuyn/Desktop/PlantShop/src/java/dtos/Plant.java</file>
+            <file>file:/C:/Users/thuyn/Desktop/PlantShop/src/java/servlets/UpdateCartServlet.java</file>
+            <file>file:/C:/Users/thuyn/Desktop/PlantShop/web/viewPlant.jsp</file>
+            <file>file:/C:/Users/thuyn/Desktop/PlantShop/web/registration.html</file>
+            <file>file:/C:/Users/thuyn/Desktop/PlantShop/src/java/servlets/LoginServlet.java</file>
+            <file>file:/C:/Users/thuyn/Desktop/PlantShop/src/java/servlets/DeleteCartServlet.java</file>
             <file>file:/C:/Users/thuyn/Desktop/PlantShop/src/java/servlets/MainController.java</file>
-            <file>file:/C:/Users/thuyn/Desktop/PlantShop/web/header_loginedUser.jsp</file>
+            <file>file:/C:/Users/thuyn/Desktop/PlantShop/src/java/servlets/LogoutServlet.java</file>
+            <file>file:/C:/Users/thuyn/Desktop/PlantShop/web/processingOrders.jsp</file>
+            <file>file:/C:/Users/thuyn/Desktop/PlantShop/web/viewCart.jsp</file>
             <file>file:/C:/Users/thuyn/Desktop/PlantShop/src/java/servlets/SaveShoppingCartServlet.java</file>
-            <file>file:/C:/Users/thuyn/Desktop/PlantShop/src/java/servlets/FilterOrderByDate.java</file>
+            <file>file:/C:/Users/thuyn/Desktop/PlantShop/src/java/servlets/AddToCartServlet.java</file>
             <file>file:/C:/Users/thuyn/Desktop/PlantShop/src/java/daos/OrderDAO.java</file>
+            <file>file:/C:/Users/thuyn/Desktop/PlantShop/web/personalPage.jsp</file>
+            <file>file:/C:/Users/thuyn/Desktop/PlantShop/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/thuyn/Desktop/PlantShop/web/profile.jsp</file>
+            <file>file:/C:/Users/thuyn/Desktop/PlantShop/src/java/dtos/CartItem.java</file>
+            <file>file:/C:/Users/thuyn/Desktop/PlantShop/web/orderDetail.jsp</file>
+            <file>file:/C:/Users/thuyn/Desktop/PlantShop/src/java/servlets/SearchServlet.java</file>
+            <file>file:/C:/Users/thuyn/Desktop/PlantShop/src/java/servlets/UserDashboardServlet.java</file>
+            <file>file:/C:/Users/thuyn/Desktop/PlantShop/web/registration.jsp</file>
         </group>
     </open-files>
 </project-private>

@@ -4,6 +4,7 @@
  */
 package daos;
 
+import dtos.CartItem;
 import dtos.Order;
 import dtos.OrderDetail;
 import java.sql.Connection;
@@ -181,7 +182,7 @@ public class OrderDAO {
         return false;
     }
 
-    public static boolean insertOrder(Order order, HashMap<String, Integer> cart) {
+    public static boolean insertOrder(Order order, ArrayList<CartItem> cart) {
         Connection connection = null;
         PreparedStatement ps = null;
         try {
@@ -205,14 +206,13 @@ public class OrderDAO {
                 if (set.next()) {
                     order.setOrderID(set.getInt(1));
                 }
-                Set<String> pids = cart.keySet();
-                for (String pid : pids) {
+                for (CartItem cartItem : cart) {
                     sql = "INSERT INTO OrderDetails (OrderID, FID, quantity)\n"
                             + "VALUES (?,?,?)";
                     ps = connection.prepareStatement(sql);
                     ps.setInt(1, order.getOrderID());
-                    ps.setInt(2, Integer.parseInt(pid));
-                    ps.setInt(3, cart.get(pid));
+                    ps.setInt(2, cartItem.getPlant().getId());
+                    ps.setInt(3, cartItem.getQuantity());
                     row += ps.executeUpdate();
                 }
                 connection.commit();

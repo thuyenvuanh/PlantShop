@@ -5,6 +5,8 @@
  */
 package dtos;
 
+import java.util.Objects;
+
 /**
  *
  * @author thuyn
@@ -41,4 +43,24 @@ public class CartItem {
     public void decrease(){
         this.quantity--;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final CartItem other = (CartItem) obj;
+        if (!Objects.equals(this.plant, other.plant)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }

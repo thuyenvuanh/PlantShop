@@ -7,16 +7,10 @@ package servlets;
 
 import daos.AccountDAO;
 import daos.OrderDAO;
-import dtos.CartItem;
+import dtos.Account;
 import dtos.Order;
-import dtos.OrderDetail;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -28,7 +22,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author thuyn
  */
-public class SaveShoppingCartServlet extends HttpServlet {
+public class UserDashboardServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,33 +37,37 @@ public class SaveShoppingCartServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        if (session != null) {
-            String name = (String) session.getAttribute("name");
-            String email = (String) session.getAttribute("email");
-            ArrayList<CartItem> cart = (ArrayList<CartItem>) session.getAttribute("cart");
-            if (cart != null && !cart.isEmpty()) {
-                if (name == null || name.equals("")) {
-                    request.setAttribute("WARNING", "You must login to finish the shopping");
-                    request.getRequestDispatcher("login.jsp").forward(request, response);
-                } else {
-                    int accID = AccountDAO.getIdByEmail(email);
-                    Order order = new Order(-1, new SimpleDateFormat("yyyy-MM-dd").format(new Date()), null, 1, accID);
-                    boolean result = OrderDAO.insertOrder(order, cart);
-                    if (result) {
-                        session.setAttribute("cart", null);
-                        request.setAttribute("WARNING", "Save your cart successfully");
-                    } else {
-                        request.setAttribute("WARNING", "These are plants out of stocks");
+        String name = (String) session.getAttribute("name");
+        String email = (String) session.getAttribute("email");
+        Cookie[] c = request.getCookies();
+        boolean login = false;
+        if (name == null) {
+            String token = "";
+            for (Cookie cookie : c) {
+                if (cookie.getName().equals("selector")) {
+                    token = cookie.getValue();
+                    Account account = AccountDAO.getAccount(token);
+                    if (account != null) {
+                        name = account.getFullname();
+                        email = account.getEmail();
+                        login = true;
                     }
                 }
-            } else {
-                request.setAttribute("WARNING", "Your cart is empty");
             }
-            request.getRequestDispatcher("viewCart.jsp").forward(request, response);
+        } else {
+            login = true;
         }
-        else {
-            response.sendRedirect("index.jsp");
+        request.setAttribute("login", login);
+        if (login) {
+            ArrayList<Order> list = (ArrayList) request.getAttribute("list");
+            if (list == null) {
+                list = OrderDAO.getOrders(email);
+            }
+            String[] status = {"", "processing", "completed", "canceled"};
+            request.setAttribute("list", list);
+            request.setAttribute("status", status);
         }
+        request.getRequestDispatcher("personalPage.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

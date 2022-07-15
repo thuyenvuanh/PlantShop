@@ -3,10 +3,14 @@
     Author     : anhthuyn2412@gmail.com - Vu Anh Thuyen
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="daos.PlantDAO"%>
 <%@page import="dtos.Plant"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<c:if test="${requestScope.list == null}">
+    <jsp:forward page="/MainController"/>
+</c:if>
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,31 +22,17 @@
             <%@include file="header.jsp" %>
         </header>
         <section>
-            <%
-                String keyword = request.getParameter("txtsearch");
-                String searchby = request.getParameter("searchby");
-                ArrayList<Plant> list;
-                String[] tmp = {"out of stock", "available"};
-                if (keyword == null && searchby == null) {
-                    list = PlantDAO.searchPlant("", "");
-                } else {
-                    list = PlantDAO.searchPlant(keyword, searchby);
-                }
-                if (list != null && !list.isEmpty()) {
-                    for (Plant plant : list) {
-            %>
-            <table class='product'>
-                <td><img src="<%= plant.getImgPath()%>" class="plantimg"/> <br>
-                    Product ID: <%= plant.getId()%> <br>
-                    Product Name: <%= plant.getName()%> <br>
-                    Price: <%= plant.getPrice()%> <br>
-                    Status: <%= tmp[plant.getStatus()]%> <br>
-                    Category: <%= plant.getCateName()%> <br>
-                    <a href="MainController?action=addtocart&pid=<%= plant.getId() %>">Add to cart</a></td>
-            </table>    
-            <%                    }
-                }
-            %>
+            <c:forEach items="${requestScope.list}" var="plant" >
+                <table class='product'>
+                    <td><img src="${plant.imgPath}" class="plantimg"/> <br>
+                        Product ID: ${plant.id} <br>
+                        Product Name: ${plant.name} <br>
+                        Price: ${plant.price} <br>
+                        Status: ${requestScope.tmp[plant.status]} <br>
+                        Category: ${plant.cateName} <br>
+                        <a href="MainController?action=addtocart&pid=${plant.id}">Add to cart</a></td>
+                </table> 
+            </c:forEach>
         </section>
         <footer>
             <%@include file="footer.jsp" %>

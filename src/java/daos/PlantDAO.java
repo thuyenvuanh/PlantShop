@@ -20,25 +20,34 @@ import utils.DBUtils;
  */
 public class PlantDAO {
 
-    public static ArrayList<Plant> searchPlant(String keyword, String searchBy) throws Exception {
+    public static ArrayList<Plant> searchPlant(String keyword, String searchBy) {
         ArrayList<Plant> list = new ArrayList<>();
-
-        Connection connection = DBUtils.getConnection();
-        if (connection == null) {
-            throw new Exception("Cannot connect to the database");
-        }
-        if (searchBy == null) {
-            throw new Exception("Search by not found");
-        }
-        String sql = "SELECT PID, [PName], price, imgPath, [description], [status], Categories.CateID as CateID, CateName\n"
-                + "FROM dbo.Plants join dbo.Categories on Plants.CateID = Categories.CateID\n"
-                + ((searchBy.equalsIgnoreCase("byname")) ? "WHERE [PName] like ?" : "WHERE CateName like ?");
-
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setString(1, "%" + keyword + "%");
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            list.add(new Plant(rs.getInt("PID"), rs.getString("PName"), rs.getInt("price"), rs.getString("imgPath"), rs.getString("description"), rs.getInt("status"), rs.getInt("CateID"), rs.getString("CateName")));
+        Connection connection = null;
+        PreparedStatement ps = null;
+        try {
+            connection = DBUtils.getConnection();
+            String sql = "SELECT PID, [PName], price, imgPath, [description], [status], Categories.CateID as CateID, CateName\n"
+                    + "FROM dbo.Plants join dbo.Categories on Plants.CateID = Categories.CateID\n";
+            if (searchBy.equalsIgnoreCase("byname")) {
+                sql += "WHERE [PName] like ?";
+            }else{
+                sql += "WHERE CateName like ?";
+            }
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, "%" + keyword + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Plant(rs.getInt("PID"), rs.getString("PName"), rs.getInt("price"), rs.getString("imgPath"), rs.getString("description"), rs.getInt("status"), rs.getInt("CateID"), rs.getString("CateName")));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                ps.close();
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PlantDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return list;
     }

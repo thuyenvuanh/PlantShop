@@ -4,6 +4,7 @@
     Author     : anhthuyn
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Set"%>
 <%@page import="java.util.HashMap"%>
@@ -20,54 +21,38 @@
             <jsp:include page="header.jsp"></jsp:include>
             </header>
             <section>
-                <%
-                    String name = (String) session.getAttribute("name");
-                    if (name != null) {
-                %>
+
+            <c:if test="${sessionScope.name != null}">
                 <h3>Welcome ${name} come back!</h3>
                 <h3><a href="MainController?action=logout">Logout</a></h3>
                 <h3><a href="personalPage.jsp">Personal page</a></h3>
-                <% }
-                %>
-                <table width="100%" class="shopping">
-                    <tr>
-                        <td>Product ID</td>
-                        <td>Name</td>
-                        <td>Image</td>
-                        <td>Quantity</td>
-                        <td>Action</td>
-                    </tr>
-                <%
-                    int total = 0;
-                    HashMap<String, CartItem> cart = (HashMap) session.getAttribute("cart");
-                    if (cart != null) {
-                        Set<String> pids = cart.keySet();
-                        for (String pid : pids) {
-                            CartItem item = cart.get(pid);
-                            total += (item.getPlant().getPrice()*item.getQuantity());
-                            
-                %>
-                <form action="MainController" method="post">
-                    <tr>
-                        <td><input type="hidden" name="pid" value="<%= item.getPlant().getId() %>"><a href="MainController?action=viewPlant&pid=<%= pid%>"><%= item.getPlant().getId() %></a></td>
-                        <td><%= item.getPlant().getName() %></td>
-                        <td><img src="<%= item.getPlant().getImgPath() %>" class="plantimg"/></td>
-                        <td><input type="number" name="quantity" value="<%= item.getQuantity() %>"></td>
-                        <td><input type="submit" name="action" value="update">
-                            <input type="submit" name="action" value="delete">
-                        </td>
-                    </tr>
-                </form>
-
-                <%
-                    }
-                } else {
-
-                %>
-                <tr><td>Your cart is empty</td></tr>
-                <% }%>
-                <tr><td>Total money: <%= total %></td></tr>
-                <tr><td>Order Date: <%= (new Date()).toString()%></td></tr>
+            </c:if>
+            <table width="100%" class="shopping">
+                <tr>
+                    <td>Product ID</td>
+                    <td>Name</td>
+                    <td>Image</td>
+                    <td>Quantity</td>
+                    <td>Action</td>
+                </tr>
+                <c:forEach items="${cart}" var="item">
+                    <form action="MainController" method="post">
+                        <tr>
+                            <td><input type="hidden" name="pid" value="${item.plant.id}"><a href="MainController?action=viewPlant&pid=${item.plant.id}">${item.plant.id}</a></td>
+                            <td>${item.plant.name}</td>
+                            <td><img src="${item.plant.imgPath}" class="plantimg"/></td>
+                            <td><input type="number" name="quantity" value="${item.quantity}"></td>
+                            <td><input type="submit" name="action" value="update">
+                                <input type="submit" name="action" value="delete">
+                            </td>
+                        </tr>
+                    </form>
+                </c:forEach>
+                <c:if test="${cart == null}">
+                    <tr><td>Your cart is empty</td></tr>
+                </c:if>
+                <tr><td>Total money: ${total}</td></tr>
+                <tr><td>Order Date: ${orderDate}</td></tr>
                 <tr><td>Ship date: N/A</td></tr>
             </table>
         </section>
@@ -75,7 +60,7 @@
             <form action="MainController" method="post">
                 <input type="submit" name="action" value="saveorder" class="submitorder">
             </form>
-            <p style="color: red;"> <%= (request.getAttribute("WARNING") == null) ? "" : request.getAttribute("WARNING") %> </p>
+            <p style="color: red;"> ${WARNING} </p>
         </section>
         <footer>
             <jsp:include page="footer.jsp"></jsp:include>

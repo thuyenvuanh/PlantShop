@@ -47,8 +47,8 @@ public class LoginServlet extends HttpServlet {
                         }
                     }
                 }
-                if (!token.equals("")) {
-                    response.sendRedirect("personalPage.jsp");
+                if (token != null && !token.equals("")) {
+                    response.sendRedirect("UserDashboardServlet");
                 } else {
                     response.sendRedirect("errorpage.jsp");
                 }
@@ -72,7 +72,7 @@ public class LoginServlet extends HttpServlet {
                                 cookie.setMaxAge(60*2);
                                 response.addCookie(cookie);
                             }
-                            response.sendRedirect("personalPage.jsp");
+                            response.sendRedirect("UserDashboardServlet");
                         }
                     }
                 } else {

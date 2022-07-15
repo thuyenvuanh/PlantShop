@@ -22,9 +22,10 @@
             <li><a href="MainController?action=viewcart" >View Cart</a></li>
             <li>
                 <form action="MainController" method="post" class="formsearch">
-                    <input type="text" name="txtsearch" value="<%= (request.getParameter("txtsearch") == null ? "" : request.getParameter("txtsearch")) %>">
+                    <input type="text" name="txtsearch" value="${param.txtsearch}">
                     <select name="searchby">
-                        <option value="byname">by name</option><option value="bycate">by category</option>
+                        <option value="byname">by name</option>
+                        <option value="bycate">by category</option>
                     </select>
                     <input type="submit" value="search" name="action" >
                 </form>

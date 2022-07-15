@@ -31,37 +31,37 @@ public class MainController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
             String action = request.getParameter("action");
             if (action == null || action.equals("") || action.equals("search")) {
-                url = "index.jsp";
+                url = "SearchServlet";
             } else if (action.equals("login")) {
                 url = "LoginServlet";
             } else if (action.equals("register")) {
                 url = "RegisterServlet";
-            } else if (action.equals("logout")){
+            } else if (action.equals("logout")) {
                 url = "LogoutServlet";
-            } else if (action.equals("reorder")){
+            } else if (action.equals("reorder")) {
                 url = "OrderServlet";
-            } else if (action.equals("updateinfo")){
+            } else if (action.equals("updateinfo")) {
                 url = "UpdateServlet";
-            } else if (action.equals("addtocart")){
+            } else if (action.equals("addtocart")) {
                 url = "AddToCartServlet";
-            } else if (action.equals("viewcart")){
+            } else if (action.equals("viewcart")) {
                 url = "viewCart.jsp";
             } else if (action.equals("update")) {
                 url = "UpdateCartServlet";
-            } else if (action.equals("delete")){
+            } else if (action.equals("delete")) {
                 url = "DeleteCartServlet";
-            } else if (action.equals("saveorder")){
+            } else if (action.equals("saveorder")) {
                 url = "SaveShoppingCartServlet";
             } else if (action.equals("viewPlant")) {
                 url = "ViewPlantDetail";
-            } else if (action.equals("filterDate")){
+            } else if (action.equals("filterDate")) {
                 url = "FilterOrderByDate";
+            } else if (action.equals("viewOrders")) {
+                url = "ViewOrders";
             }
             request.getRequestDispatcher(url).forward(request, response);
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

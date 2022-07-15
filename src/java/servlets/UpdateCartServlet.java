@@ -4,8 +4,11 @@
  */
 package servlets;
 
+import daos.PlantDAO;
 import dtos.CartItem;
+import dtos.Plant;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -35,15 +38,24 @@ public class UpdateCartServlet extends HttpServlet {
         String newQuantity = request.getParameter("quantity");
         HttpSession session = request.getSession();
         if (session != null) {
-            HashMap<String, CartItem> cart = (HashMap) session.getAttribute("cart");
-            if (cart != null) {
-                CartItem item = cart.get(pid);
-                if (item != null) {
-                    item.setQuantity(Integer.parseInt(newQuantity));
-                    cart.put(pid, item);
-                    session.setAttribute("cart", cart);
-                    response.sendRedirect("viewCart.jsp");
+            ArrayList<CartItem> cart = (ArrayList<CartItem>) session.getAttribute("cart");
+            CartItem item = null;
+            for (CartItem cartItem : cart) {
+                if (cartItem.getPlant().equals(new Plant(Integer.parseInt(pid)))) {
+                    item = cartItem;
+                    break;
                 }
+            }
+
+            if (item != null) {
+                item.setQuantity(Integer.parseInt(newQuantity));
+                int total = 0;
+                for (CartItem cartItem : cart) {
+                    total += cartItem.getPlant().getPrice() * cartItem.getQuantity();
+                }
+                session.setAttribute("total", total);
+                session.setAttribute("cart", cart);
+                response.sendRedirect("viewCart.jsp");
             }
         }
     }

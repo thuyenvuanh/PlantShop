@@ -16,7 +16,6 @@
             <jsp:include page="header.jsp"></jsp:include>
             </header>
         <section>
-            <%--<jsp:useBean id="plant" class="dtos.Plant" />--%> 
                 <table>
                     <tr><td rowspan="8"><img src="${plant.imgPath}"/></td></tr>
                 <tr><td>ID:          ${plant.id}</td></tr>

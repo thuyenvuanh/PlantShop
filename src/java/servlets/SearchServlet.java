@@ -38,9 +38,19 @@ public class SearchServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String keyword = request.getParameter("txtsearch");
         String searchBy = request.getParameter("searchby");
-        System.out.println(keyword);
-        System.out.println(searchBy);
-        try {
+        ArrayList<Plant> list;
+        String[] tmp = {"out of stock", "available"};
+        if (keyword == null && searchBy == null) {
+            list = PlantDAO.searchPlant("", "");
+        } else {
+            list = PlantDAO.searchPlant(keyword, searchBy);
+        }
+        
+        request.setAttribute("list", list);
+        request.setAttribute("tmp", tmp);
+        request.getRequestDispatcher("index.jsp").forward(request, response);
+
+        /*try {
             PrintWriter out = response.getWriter();
             ArrayList<Plant> list = dao.searchPlant(keyword, searchBy);
 
@@ -112,7 +122,7 @@ public class SearchServlet extends HttpServlet {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             response.sendRedirect("errorpage.jsp") ;
-        }
+        }*/
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

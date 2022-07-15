@@ -14,16 +14,16 @@
     <body>
         <nav>
             <ul>
-                <li><a href="index.jsp"/>Home</li>
+                <li><a href="MainController"/>Home</li>
                 <li><a href="profile.jsp"/>Change profile</li>
-                <li><a href="completedOrders.jsp"/>Completed Orders</li>
-                <li><a href="canceledOrders.jsp"/>Canceled Orders</li>
-                <li><a href="processingOrders.jsp"/>Processing Orders</li>
+                <li><a href="MainController?action=viewOrders&type=2"/>Completed Orders</li>
+                <li><a href="MainController?action=viewOrders&type=3"/>Canceled Orders</li>
+                <li><a href="MainController?action=viewOrders&type=1"/>Processing Orders</li>
                 <li>
                     <div>
                         <form action="MainController" method="GET">
-                            from <input type="date" name="from" value="<%= request.getAttribute("from") %>"> <br>
-                            to <input type="date" name="to" value="<%= request.getAttribute("to") %>">
+                            from <input type="date" name="from" value="${requestScope.from}"> <br>
+                            to <input type="date" name="to" value="${requestScope.to}">
                             <input type="submit" value="filterDate" name="action">
                         </form>
                     </div>

@@ -22,12 +22,12 @@
                     <tbody>
                         <tr>
                             <td>Email:</td>
-                            <td><input name="email" type="text" value="<%= (request.getAttribute("txtemail") == null) ? "" : request.getAttribute("txtemail")%>" 
+                            <td><input name="email" type="text" value="${requestScope.txtemail}" 
                                        required="" pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"/></td>
                         </tr>
                         <tr>
                             <td>Full Name:</td>
-                            <td><input name="fullName" type="text" value="<%= (request.getAttribute("txtfullname") == null) ? "" : request.getAttribute("txtfullname") %>" required/></td>
+                            <td><input name="fullName" type="text" value="${requestScope.txtfullname}" required/></td>
                         </tr>
                         <tr>
                             <td>Password: </td>
@@ -35,8 +35,8 @@
                         </tr>
                         <tr>
                             <td>Phone Number:</td>
-                            <td><input type="text" name="phoneNumber" value="<%= (request.getAttribute("txtphone") == null) ? "" : request.getAttribute("txtphone")%>">
-                            <br><%= (request.getAttribute("ERROR") == null) ? "" : request.getAttribute("ERROR") %></td>
+                            <td><input type="text" name="phoneNumber" value="${requestScope.txtphone}">
+                                <br>${requestScope.ERROR}</td>
                         </tr>
                         <tr>
                             <td></td>

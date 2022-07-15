@@ -8,7 +8,12 @@ import daos.PlantDAO;
 import dtos.CartItem;
 import dtos.Plant;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -34,25 +39,28 @@ public class AddToCartServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String pid = request.getParameter("pid");
+        Plant plant = PlantDAO.getById(Integer.parseInt(pid));
         HttpSession session = request.getSession(true);
         if (session != null) {
-            HashMap<String, CartItem> cart = (HashMap<String, CartItem>) session.getAttribute("cart");
+            ArrayList<CartItem> cart = (ArrayList<CartItem>) session.getAttribute("cart");
             if (cart == null) {
-                cart = new HashMap<>();
-                Plant plant = PlantDAO.getById(Integer.parseInt(pid));
+                cart = new ArrayList<>();
                 CartItem item = new CartItem(plant, 1);
-                cart.put(pid, item);
+                session.setAttribute("orderDate", new SimpleDateFormat("dd-MM-YYYY").format(new Date()));
+                cart.add(item);
             } else {
-                CartItem tmp = cart.get(pid);
-                if (tmp == null) {
-                    Plant plant = PlantDAO.getById(Integer.parseInt(pid));
-                    CartItem item = new CartItem(plant, 1);
-                    cart.put(pid, item);
+                CartItem item = new CartItem(plant, 1);
+                if (!cart.contains(item)) {
+                    cart.add(item);
                 } else {
-                    tmp.increase();
-                    cart.put(pid, tmp);
+                    cart.get(cart.indexOf(item)).increase();
                 }
             }
+            int total = 0;
+            for (CartItem cartItem : cart) {
+                total += cartItem.getPlant().getPrice() * cartItem.getQuantity();
+            }
+            session.setAttribute("total", total);
             session.setAttribute("cart", cart);
             response.sendRedirect("index.jsp");
         }

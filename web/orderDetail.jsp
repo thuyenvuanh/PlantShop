@@ -57,7 +57,7 @@
                 <td><img src="<%= order.getImgPath()%>" class="plantimg" alt="Plant image"/></td>
                 <td><%= order.getPrice() %></td>
                 <td><%= order.getQuantity()%></td>
-                <% money = order.getPrice() * order.getQuantity(); %>
+                <% money += order.getPrice() * order.getQuantity(); %>
             </tr>
         </table>
         <% } %>

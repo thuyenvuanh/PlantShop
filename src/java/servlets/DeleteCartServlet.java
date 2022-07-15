@@ -6,8 +6,10 @@
 package servlets;
 
 import dtos.CartItem;
+import dtos.Plant;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -34,9 +36,16 @@ public class DeleteCartServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        HashMap<String, CartItem> cart = (HashMap) session.getAttribute("cart");
+        ArrayList<CartItem> cart = (ArrayList<CartItem>) session.getAttribute("cart");
         String pid = request.getParameter("pid");
-        cart.remove(pid);
+        cart.removeIf((cartItem) -> {
+            return cartItem.getPlant().equals(new Plant(Integer.parseInt(pid)));
+        });
+        int total = 0;
+        for (CartItem cartItem : cart) {
+            total += cartItem.getPlant().getPrice() * cartItem.getQuantity();
+        }
+        session.setAttribute("total", total);
         session.setAttribute("cart", cart);
         response.sendRedirect("viewCart.jsp");
     }
