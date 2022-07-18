@@ -27,7 +27,7 @@
                 <h3><a href="MainController?action=logout">Logout</a></h3>
                 <h3><a href="personalPage.jsp">Personal page</a></h3>
             </c:if>
-            <table width="100%" class="shopping">
+            <table width="100%" class="order">
                 <tr>
                     <td>Product ID</td>
                     <td>Name</td>
@@ -48,17 +48,17 @@
                         </tr>
                     </form>
                 </c:forEach>
-                <c:if test="${cart == null}">
-                    <tr><td>Your cart is empty</td></tr>
-                </c:if>
-                <tr><td>Total money: ${total}</td></tr>
-                <tr><td>Order Date: ${orderDate}</td></tr>
-                <tr><td>Ship date: N/A</td></tr>
             </table>
+                <c:if test="${cart == null}">
+                    <h3>Your cart is empty</h3>
+                </c:if>
+                    <p>Total money: ${total}</p>
+                    <p>Order Date: ${orderDate}</p>
+                    <p>Ship date: N/A</p>
         </section>
         <section>
             <form action="MainController" method="post">
-                <input type="submit" name="action" value="saveorder" class="submitorder">
+                <input type="submit" name="action" value="Save Order" class="submitorder">
             </form>
             <p style="color: red;"> ${WARNING} </p>
         </section>

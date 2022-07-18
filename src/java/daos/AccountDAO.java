@@ -18,15 +18,15 @@ import utils.DBUtils;
 public class AccountDAO {
 
     public static ArrayList<Account> getAccounts() {
-     
+
         ArrayList<Account> list = new ArrayList();
-        
+
         try {
             Connection connection = DBUtils.getConnection();
             String sql = "select accID,email,password,fullname,phone,status,role\n"
                     + "from Accounts";
             ResultSet rs = connection.createStatement().executeQuery(sql);
-            while (rs != null && rs.next()) {                
+            while (rs != null && rs.next()) {
                 list.add(new Account(
                         rs.getInt("accID"),
                         rs.getInt("status"),
@@ -41,7 +41,35 @@ public class AccountDAO {
         }
         return list;
     }
-    
+
+    public static ArrayList<Account> getAccounts(String keyword) {
+
+        ArrayList<Account> list = new ArrayList();
+
+        try {
+            Connection connection = DBUtils.getConnection();
+            String sql = "select accID,email,password,fullname,phone,status,role\n"
+                    + "from Accounts\n"
+                    + "where email like ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, "%" + keyword +"%");
+            ResultSet rs = ps.executeQuery();
+            while (rs != null && rs.next()) {
+                list.add(new Account(
+                        rs.getInt("accID"),
+                        rs.getInt("status"),
+                        rs.getInt("role"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("fullname"),
+                        rs.getString("Phone")));
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
+    }
+
     public static Account getAccount(String email, String password) {
 
         Account account = null;
@@ -69,7 +97,7 @@ public class AccountDAO {
         }
         return account;
     }
-    
+
     public static Account getAccount(String token) {
 
         Account account = null;
@@ -96,7 +124,7 @@ public class AccountDAO {
         }
         return account;
     }
-    
+
     public static int getIdByEmail(String email) {
 
         int id = -1;
@@ -177,8 +205,8 @@ public class AccountDAO {
         }
         return result;
     }
-    
-    public static boolean updateToken(String email, String token){
+
+    public static boolean updateToken(String email, String token) {
         boolean result = false;
         try {
             Connection connection = DBUtils.getConnection();

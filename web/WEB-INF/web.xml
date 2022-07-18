@@ -72,6 +72,50 @@
         <servlet-name>UserDashboardServlet</servlet-name>
         <servlet-class>servlets.UserDashboardServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ManageAccounts</servlet-name>
+        <servlet-class>servlets.ManageAccounts</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateAccount</servlet-name>
+        <servlet-class>servlets.UpdateAccount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchAccount</servlet-name>
+        <servlet-class>servlets.SearchAccount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManagePlant</servlet-name>
+        <servlet-class>servlets.ManagePlant</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditPlant</servlet-name>
+        <servlet-class>servlets.EditPlant</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchPlants</servlet-name>
+        <servlet-class>servlets.SearchPlants</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageOrders</servlet-name>
+        <servlet-class>servlets.ManageOrders</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DetailOrder</servlet-name>
+        <servlet-class>servlets.DetailOrder</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchOrders</servlet-name>
+        <servlet-class>servlets.SearchOrders</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageCategories</servlet-name>
+        <servlet-class>servlets.ManageCategories</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchCategories</servlet-name>
+        <servlet-class>servlets.SearchCategories</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -135,6 +179,50 @@
     <servlet-mapping>
         <servlet-name>UserDashboardServlet</servlet-name>
         <url-pattern>/UserDashboardServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageAccounts</servlet-name>
+        <url-pattern>/ManageAccounts</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateAccount</servlet-name>
+        <url-pattern>/UpdateAccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchAccount</servlet-name>
+        <url-pattern>/SearchAccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManagePlant</servlet-name>
+        <url-pattern>/ManagePlant</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditPlant</servlet-name>
+        <url-pattern>/EditPlant</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchPlants</servlet-name>
+        <url-pattern>/SearchPlants</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageOrders</servlet-name>
+        <url-pattern>/ManageOrders</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DetailOrder</servlet-name>
+        <url-pattern>/DetailOrder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchOrders</servlet-name>
+        <url-pattern>/SearchOrders</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageCategories</servlet-name>
+        <url-pattern>/ManageCategories</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchCategories</servlet-name>
+        <url-pattern>/SearchCategories</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

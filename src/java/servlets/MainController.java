@@ -31,37 +31,59 @@ public class MainController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-            String action = request.getParameter("action");
-            if (action == null || action.equals("") || action.equals("search")) {
-                url = "SearchServlet";
-            } else if (action.equals("login")) {
-                url = "LoginServlet";
-            } else if (action.equals("register")) {
-                url = "RegisterServlet";
-            } else if (action.equals("logout")) {
-                url = "LogoutServlet";
-            } else if (action.equals("reorder")) {
-                url = "OrderServlet";
-            } else if (action.equals("updateinfo")) {
-                url = "UpdateServlet";
-            } else if (action.equals("addtocart")) {
-                url = "AddToCartServlet";
-            } else if (action.equals("viewcart")) {
-                url = "viewCart.jsp";
-            } else if (action.equals("update")) {
-                url = "UpdateCartServlet";
-            } else if (action.equals("delete")) {
-                url = "DeleteCartServlet";
-            } else if (action.equals("saveorder")) {
-                url = "SaveShoppingCartServlet";
-            } else if (action.equals("viewPlant")) {
-                url = "ViewPlantDetail";
-            } else if (action.equals("filterDate")) {
-                url = "FilterOrderByDate";
-            } else if (action.equals("viewOrders")) {
-                url = "ViewOrders";
-            }
-            request.getRequestDispatcher(url).forward(request, response);
+        String action = request.getParameter("action");
+        if (action == null || action.equals("") || action.equals("search")) {
+            url = "SearchServlet";
+        } else if (action.equals("login")) {
+            url = "LoginServlet";
+        } else if (action.equals("register")) {
+            url = "RegisterServlet";
+        } else if (action.equals("logout")) {
+            url = "LogoutServlet";
+        } else if (action.equals("reorder")) {
+            url = "OrderServlet";
+        } else if (action.equals("updateinfo")) {
+            url = "UpdateServlet";
+        } else if (action.equals("addtocart")) {
+            url = "AddToCartServlet";
+        } else if (action.equals("viewcart")) {
+            url = "viewCart.jsp";
+        } else if (action.equals("update")) {
+            url = "UpdateCartServlet";
+        } else if (action.equals("delete")) {
+            url = "DeleteCartServlet";
+        } else if (action.equals("Save Order")) {
+            url = "SaveShoppingCartServlet";
+        } else if (action.equals("viewPlant")) {
+            url = "ViewPlantDetail";
+        } else if (action.equals("filterDate")) {
+            url = "FilterOrderByDate";
+        } else if (action.equals("viewOrders")) {
+            url = "ViewOrders";
+        } else if (action.equals("manageAccounts")) {
+            url = "ManageAccounts";
+        } else if (action.equals("updateAccountStatus")) {
+            url = "UpdateAccount";
+        } else if (action.equals("Search Account")) {
+            url = "SearchAccount";
+        } else if (action.equals("managePlants")) {
+            url = "ManagePlant";
+        } else if (action.equals("updatePlants")){
+            url = "EditPlant";
+        } else if (action.equals("Search Plants")) {
+            url = "SearchPlants";
+        } else if (action.equals("Search Orders")){
+            url = "SearchOrders";
+        } else if (action.equals("manageOrders")){
+            url = "ManageOrders";
+        } else if (action.equals("detailOrder")){
+            url = "DetailOrder";
+        } else if (action.equals("manageCategories")){
+            url = "ManageCategories";
+        } else if (action.equals("Search Categories")) {
+            url = "SearchCategories";
+        }
+        request.getRequestDispatcher(url).forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

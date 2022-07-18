@@ -30,7 +30,7 @@ public class PlantDAO {
                     + "FROM dbo.Plants join dbo.Categories on Plants.CateID = Categories.CateID\n";
             if (searchBy.equalsIgnoreCase("byname")) {
                 sql += "WHERE [PName] like ?";
-            }else{
+            } else {
                 sql += "WHERE CateName like ?";
             }
             ps = connection.prepareStatement(sql);
@@ -50,6 +50,42 @@ public class PlantDAO {
             }
         }
         return list;
+    }
+
+    public static void updatePlantStatus(int id, int status) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        try {
+            connection = DBUtils.getConnection();
+            connection.setAutoCommit(false);
+            String sql = "Update dbo.Plants \n"
+                    + "Set Status = ? \n"
+                    + "WHERE PID = ?";
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, status);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+            connection.commit();
+            connection.setAutoCommit(true);
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                Logger.getLogger(PlantDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                ps.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PlantDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PlantDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     public static Plant getById(int id) {

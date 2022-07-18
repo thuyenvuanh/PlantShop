@@ -57,7 +57,20 @@ public class LoginServlet extends HttpServlet {
                 if (account != null) {
                     if (account.getRole() == 1) {
                         //admin
-
+                        HttpSession session = request.getSession();
+                        if (session != null) {
+                            session.setAttribute("name", account.getFullname());
+                            session.setAttribute("email", email);
+                            session.setAttribute("account", account);
+                            if (save != null) {
+                                String token = "AdminToken";
+                                AccountDAO.updateToken(email, token);
+                                Cookie cookie = new Cookie("selector", token);
+                                cookie.setMaxAge(60 * 2);
+                                response.addCookie(cookie);
+                            }
+                            response.sendRedirect("AdminIndex.jsp");
+                        }
                     } else {
                         //user/customer
                         HttpSession session = request.getSession(true);
@@ -66,10 +79,10 @@ public class LoginServlet extends HttpServlet {
                             session.setAttribute("email", account.getEmail());
                             session.setAttribute("account", account);
                             if (save != null) {
-                                String token  = "ABC123";
+                                String token = "ABC123";
                                 AccountDAO.updateToken(account.getEmail(), token);
                                 Cookie cookie = new Cookie("selector", token);
-                                cookie.setMaxAge(60*2);
+                                cookie.setMaxAge(60 * 2);
                                 response.addCookie(cookie);
                             }
                             response.sendRedirect("UserDashboardServlet");

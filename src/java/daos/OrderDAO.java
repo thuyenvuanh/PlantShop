@@ -65,6 +65,42 @@ public class OrderDAO {
         }
         return result;
     }
+    
+    public static ArrayList<Order> getOrders() {
+        Connection connection = null;
+        ArrayList<Order> result = new ArrayList<>();
+        PreparedStatement ps = null;
+        try {
+            connection = DBUtils.getConnection();
+            if (connection != null) {
+                String sql = "SELECT OrderID, OrdDate, shipdate, Orders.[status], orders.AccID, email\n"
+                        + "FROM Orders join Accounts on orders.AccID = accounts.accID\n";
+                ResultSet rs = connection.createStatement().executeQuery(sql);
+                while (rs.next()) {
+                    result.add(new Order(
+                            rs.getInt("OrderID"),
+                            (rs.getDate("OrdDate") == null) ? null : rs.getDate("OrdDate").toString(),
+                            (rs.getDate("shipdate") == null) ? null : rs.getDate("shipdate").toString(),
+                            rs.getInt("status"),
+                            rs.getInt("AccID"))
+                    );
+                }
+            }
+        } catch (Exception e) {
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return result;
+    }
 
     public static ArrayList<Order> getOrdersByDate(Date from, Date to) {
 
